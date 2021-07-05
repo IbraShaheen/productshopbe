@@ -57,49 +57,49 @@ exports.productsList = async (req, res,next) =>  {
 
 
 
-// exports.productsCreate = async (req, res, next) => {
-//   try {
-//       req.body.image=`http://localhost:8080/media/${req.file.filename}`
-//       const newProduct = await Product.create(req.body);
-//       res.status(201).json(newProduct)
+exports.productsCreate = async (req, res, next) => {
+  try {
+      req.body.image=`http://localhost:8080/media/${req.file.filename}`
+      const newProduct = await Product.create(req.body);
+      res.status(201).json(newProduct)
 
-//   } catch (error) {
-//     next(error);
-//       // res.status(500).json({msg: error.message ?? "server error"})
-//   }
-// };
-
-
+  } catch (error) {
+    next(error);
+      // res.status(500).json({msg: error.message ?? "server error"})
+  }
+};
 
 
 
-  // exports.productsDelete =async (req, res, next) => {
-  //   try {
-  //     await req.product.destroy();
-  //     // this >> await req.foundproduct.destroy();
-  //     res.status(204).end();
-  //   } catch (err) {
-  //     next(error);
-  //   }
-  // };
+
+
+  exports.productsDelete =async (req, res, next) => {
+    try {
+      await req.product.destroy();
+      // this >> await req.foundproduct.destroy();
+      res.status(204).end();
+    } catch (err) {
+      next(error);
+    }
+  };
 
 
 
-// exports.productUpdate =async (req, res, next) => {
-//   try {
+exports.productUpdate =async (req, res, next) => {
+  try {
       
-//     //     req.body.image=`http://localhost:8080/media/${req.file.filename}`
+    //     req.body.image=`http://localhost:8080/media/${req.file.filename}`
       
-//     // await req.product.update(req.body)
-//     // res.json(req.product);
+    // await req.product.update(req.body)
+    // res.json(req.product);
     
         
-//           req.body.image =`http://${req.get("host")}/media/${req.file.filename}`;
+          req.body.image =`http://${req.get("host")}/media/${req.file.filename}`;
         
-//         await req.product.update(req.body);
-//         res.status(204).end();
+        await req.product.update(req.body);
+        res.status(200).end();
       
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+  } catch (err) {
+    next(err);
+  }
+};

@@ -61,11 +61,20 @@ exports.shopsList = async (req, res,next) =>  {
 //   };
 
 
-
+///////
 
   exports.shopsCreate = async (req, res, next) => {
     try {
+
+         req.body.userId = req.user.id
+        //  let userId;
+        //  req.body = {...req.body, userId: 1}
+
+
         req.body.image=`http://localhost:8080/media/${req.file.filename}`
+
+          console.log(req.body)
+
         const newShop = await Shop.create(req.body);
         res.status(201).json(newShop)
 
@@ -123,3 +132,12 @@ exports.productsCreate = async (req, res, next) => {
 //     next(err);
 //   }
 // };
+
+
+
+/*
+/users/username/shops
+
+username >>> userId
+
+*/

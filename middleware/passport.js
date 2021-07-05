@@ -33,7 +33,7 @@ exports.localStrategy = new LocalStrategy(async (username, password, done) => {
 exports.jwtSrategy = new JWTSrategy(
   {
     jwtFromRequest: fromAuthHeaderAsBearerToken(),
-    secretOrKey: JWT_SECRET,
+    secretOrKey: "asupersecretkey", // insted of JWT_SECRET we wrote "asupersecretkey"
   },
 
   async (payload, done) => {

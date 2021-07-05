@@ -42,6 +42,7 @@ const generateToken=(user)=>{
         exp: Date.now() + JWT_EXPIRATION_MS,
         // don't put any password at all
     }
-    const token = jwt.sign(payload, JWT_SECRET);
+    const token = jwt.sign(payload, "asupersecretkey"); // insted of JWT_SECRET
     return token; 
 }
+
