@@ -7,7 +7,7 @@ const app = express();
 const path = require("path");
 const cors = require("cors");
 const passport = require("passport");
-const { localStrategy } = require("./middleware/passport");
+const { localStrategy, jwtSrategy } = require("./middleware/passport");
 
 
 app.use(cors());
@@ -15,6 +15,7 @@ app.use(express.json());
 
 app.use(passport.initialize())
 passport.use(localStrategy)
+passport.use(jwtSrategy)
 
 
 
