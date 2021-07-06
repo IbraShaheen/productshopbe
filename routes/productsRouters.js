@@ -34,7 +34,7 @@ router.post("/",passport.authenticate("jwt",{session:false}), upload.single("ima
   
 router.delete("/:productId",passport.authenticate("jwt",{session:false}), productsDelete)
 
-router.get("/", passport.authenticate("jwt",{session:false}), productsList) 
+router.get("/", productsList) 
 
 router.put("/:productId", passport.authenticate("jwt",{session:false}), upload.single("image"),productUpdate)
 
