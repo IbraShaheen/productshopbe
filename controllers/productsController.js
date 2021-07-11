@@ -1,5 +1,5 @@
 
-const {Product} = require("../db/models");
+const {Product,Shop} = require("../db/models");
 
 
 // exports.ProductsList = (req, res) =>  res.json(data);
@@ -57,28 +57,42 @@ exports.productsList = async (req, res,next) =>  {
 
 
 
-exports.productsCreate = async (req, res, next) => {
-  try {
-      req.body.image=`http://localhost:8080/media/${req.file.filename}`
-      const newProduct = await Product.create(req.body);
-      res.status(201).json(newProduct)
+// exports.productsCreate = async (req, res, next) => {
+//   try {
+//       req.body.image=`http://localhost:8080/media/${req.file.filename}`
+//       const newProduct = await Product.create(req.body);
+//       res.status(201).json(newProduct)
 
-  } catch (error) {
-    next(error);
-      // res.status(500).json({msg: error.message ?? "server error"})
-  }
-};
-
-
+//   } catch (error) {
+//     next(error);
+//       // res.status(500).json({msg: error.message ?? "server error"})
+//   }
+// };
 
 
 
-  exports.productsDelete =async (req, res, next) => {
+
+
+  exports.productsDelete = async (req, res, next) => {
     try {
+     // const shop = Shop.findByPk(req.product.id)
+
+      // user came from passort
+      if(req.shop.userId !== req.user.id){
+        next({
+            status: 401,
+            message: "This product not yours! you can't do that"
+          })
+
+          // throw{
+          //   status: 401,
+          //   message: "This product not yours! you can't do that"
+          // }
+      }
       await req.product.destroy();
       // this >> await req.foundproduct.destroy();
       res.status(204).end();
-    } catch (err) {
+    } catch (error) {
       next(error);
     }
   };
@@ -92,14 +106,25 @@ exports.productUpdate =async (req, res, next) => {
       
     // await req.product.update(req.body)
     // res.json(req.product);
-    
-        
+
+    if(req.shop.userId !== req.user.id){
+      // throw{
+      //   status: 401,
+      //   message: "This product not yours! you can't do that"
+      // }
+      next({
+        status: 401,
+        message: "This product not yours! you can't do that"
+      })
+    }
+
+    if(req.file){
           req.body.image =`http://${req.get("host")}/media/${req.file.filename}`;
-        
+    }
         await req.product.update(req.body);
         res.status(200).end();
       
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };

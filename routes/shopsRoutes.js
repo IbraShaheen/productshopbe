@@ -1,4 +1,4 @@
-const express=require("express");
+const express = require("express");
 const upload = require("../media/middleware/multer")
 
 const router = express.Router();
@@ -34,4 +34,4 @@ router.get("/", shopsList)
 
 
 
-module.exports=router;
+module.exports = router;

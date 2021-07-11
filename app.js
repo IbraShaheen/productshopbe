@@ -2,6 +2,7 @@
 const express = require("express");
 const productsRouters = require("./routes/productsRouters");
 const shopsRoutes = require("./routes/shopsRoutes");
+
 const usersRoutes = require("./routes/usersRoutes");
 const app = express();
 const path = require("path");

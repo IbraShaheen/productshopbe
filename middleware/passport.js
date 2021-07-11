@@ -3,7 +3,8 @@ const LocalStrategy = require("passport-local").Strategy;
 const { User } = require("../db/models");
 const bcrypt = require("bcrypt");
 const JWTSrategy = require("passport-jwt").Strategy;
-const JWT_SECRET = require("../config/keys")
+const {JWT_SECRET} = require("../config/keys") //
+// always must be with {}
 
 const { fromAuthHeaderAsBearerToken } = require("passport-jwt").ExtractJwt;
 
@@ -20,6 +21,7 @@ exports.localStrategy = new LocalStrategy(async (username, password, done) => {
     //not match
     if (passwordsMatch) {
       return done(null, user);
+      // if correct will save the user in req.user
     } else {
       return done({ status: 401, message: "Incorrect Username or Password" });
     }
@@ -49,3 +51,4 @@ exports.jwtSrategy = new JWTSrategy(
   }
 
 )
+// payload for the decoded token

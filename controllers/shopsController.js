@@ -73,7 +73,7 @@ exports.shopsList = async (req, res,next) =>  {
 
         req.body.image=`http://localhost:8080/media/${req.file.filename}`
 
-          console.log(req.body)
+        //  console.log(req.body)
 
         const newShop = await Shop.create(req.body);
         res.status(201).json(newShop)
@@ -88,7 +88,16 @@ exports.shopsList = async (req, res,next) =>  {
 
 exports.productsCreate = async (req, res, next) => {
     try {
-        req.body.shopId=req.shop.id
+      console.log(req.shop)
+        if(req.shop.userId !== req.user.id){
+
+          next({
+            status: 401,
+            message: "This shop not yours! you can't do that"
+          })
+        }
+       req.body.shopId=req.shop.id
+       if(req.file)
         req.body.image=`http://localhost:8080/media/${req.file.filename}`
         const newProduct = await Product.create(req.body);
         res.status(201).json(newProduct)

@@ -2,9 +2,10 @@ const express=require("express");
 const upload = require("../media/middleware/multer")
 
 const router = express.Router();
-const {productsCreate , productsDelete , productsList,productUpdate,fetchProduct} =require("../controllers/productsController");
+const { productsDelete , productsList,productUpdate,fetchProduct} =require("../controllers/productsController");
 
-const passport = require("passport")
+const passport = require("passport");
+const { fetchShop } = require("../controllers/shopsController");
 
 
 // router.param("productId",async (req,res,next,productId)=>{
@@ -18,11 +19,14 @@ const passport = require("passport")
 //         next(res.status(404).json({message : "product is not found"}))
 //     }
 // })
+
 router.param("productId", async (req, res, next, productId) => {
     const product = await fetchProduct(productId, next);
 
     if (product) {
+      const shop = await fetchShop(product.shopId, next)
       req.product = product;
+      req.shop = shop;
       next();
     } else {
       next({ message: "product Not Found", status: 404 });
@@ -30,7 +34,7 @@ router.param("productId", async (req, res, next, productId) => {
   });
 
 
-router.post("/",passport.authenticate("jwt",{session:false}), upload.single("image") , productsCreate);
+//router.post("/",passport.authenticate("jwt",{session:false}), upload.single("image") , productsCreate);
   
 router.delete("/:productId",passport.authenticate("jwt",{session:false}), productsDelete)
 
@@ -41,4 +45,4 @@ router.put("/:productId", passport.authenticate("jwt",{session:false}), upload.s
 
 
 
-module.exports=router;
+module.exports = router;
