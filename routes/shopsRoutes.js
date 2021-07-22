@@ -1,10 +1,10 @@
 const express = require("express");
+const passport = require("passport");
+const router = express.Router();
 const upload = require("../media/middleware/multer")
 
-const router = express.Router();
 const {shopsCreate , shopsDelete , shopsList,shopUpdate,fetchShop} =require("../controllers/shopsController");
 const { productsCreate } = require("../controllers/shopsController");
-const passport = require("passport");
 
 
 

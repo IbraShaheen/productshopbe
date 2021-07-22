@@ -4,6 +4,9 @@ const productsRouters = require("./routes/productsRouters");
 const shopsRoutes = require("./routes/shopsRoutes");
 
 const usersRoutes = require("./routes/usersRoutes");
+const ordersRoutes = require("./routes/ordersRoutes");
+
+
 const app = express();
 const path = require("path");
 const cors = require("cors");
@@ -27,6 +30,7 @@ app.use("/products", productsRouters);
 // app.use("/signup", usersRoutes);
 
 app.use(usersRoutes)
+app.use(ordersRoutes)
 
 
 
